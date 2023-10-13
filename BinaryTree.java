@@ -304,14 +304,14 @@ public class BinaryTree {
 
     public Node search(int elemento) {
         Node actual = this.root;
-        while (actual != null && actual.getData() != elemento)
+        while (actual != null && actual.getData() != elemento){
 
             if (actual.getData() > elemento)
                 actual = actual.getLeft();
             else
-                actual = actual.getRight();
+                actual = actual.getRight();}
 
-        return null;
+        return actual;
 
 
     }

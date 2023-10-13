@@ -4,7 +4,7 @@ public class Main {
 
 
 
-        int upperbound = 100;
+        int upperbound = 10;
         Random rand = new Random(1234);
         Scanner in = new Scanner(System.in);
 
@@ -17,7 +17,7 @@ public class Main {
 
         System.out.println("Thread 1 Started.");
         String numbers = "";
-        for (int i=0 ; i<100;i++){
+        for (int i=0 ; i<10;i++){
             d.insert(int_random);
             numbers += int_random +" ,";
 
@@ -52,5 +52,6 @@ public class Main {
                 System.out.println();
 
             }
+
         }
     }}

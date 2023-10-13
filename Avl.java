@@ -128,6 +128,12 @@ public class Avl {
         if (node == null)
             return node;
 
+        if(root.getData() == key && root.getRight() == null && root.getLeft() == null){
+            root = null;
+        }
+
+
+
         if(key < node.getData()){
             node.setLeft(delete(node.getLeft() , key));
         }
@@ -141,13 +147,28 @@ public class Avl {
 
                    if(temp == null){
                        node = null;
-                       
+                       if (this.root == node){
+                           this.root = null;
+                       }
                    } else {
+                       if(this.root == node){
+                           if(temp == node.getLeft()){
+                               this.root = node.getLeft();
+
+                           }
+                           else {
+                               this.root = node.getRight();
+                           }}
                        node= temp;
                    }
+
             }
             else{
+
+
+
                 Node temp = getSuccessor(node);
+
                 node.setData(temp.getData());
                 node.setCount(temp.getCount());
                 node.setRight(delete(node.getRight(),temp.getData()));
@@ -229,7 +250,7 @@ public class Avl {
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append(root.getData() + "(" +root.getCount() +")" );
+        sb.append(root.getData());
 
         String pointerRight = "└──";
         String pointerLeft = (root.getRight() != null) ? "├──" : "└──(left)";
@@ -246,7 +267,7 @@ public class Avl {
             sb.append("\n");
             sb.append(padding);
             sb.append(pointer);
-            sb.append(node.getData()+ "(" +node.getCount() +")");
+            sb.append(node.getData());
 
             StringBuilder paddingBuilder = new StringBuilder(padding);
             if (hasRightSibling) {

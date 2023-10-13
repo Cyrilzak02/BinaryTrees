@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Main_Normal {
     public static void main(String[] args) {
-        int upperbound = 100;
+        int upperbound = 20000;
         Random rand = new Random(1234);
         Scanner in = new Scanner(System.in);
 
@@ -15,7 +15,11 @@ public class Main_Normal {
         int f [] ={6, 26, 26, 29, 49, 6, 65, 29, 85, 19,2,4};
         String numbers = "";
         System.out.println("Thread 1 Started.");
-        for (int i=0 ; i<100;i++){
+        long startTime = System.nanoTime();
+
+
+
+        for (int i=0 ; i<20000;i++){
             d.push(int_random);
             numbers += int_random + " ,";
 
@@ -26,9 +30,13 @@ public class Main_Normal {
 
             int_random = rand.nextInt(upperbound);
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;
+        System.out.println("Duracao insercao : "+ duration + " ms");
         System.out.println(numbers);
 
         d.print();
+        System.out.println("Duracao insercao : "+ duration + " ms");
        /* System.out.println("Inordem: ");
         d.inordem(d.getRoot());
         System.out.println();
