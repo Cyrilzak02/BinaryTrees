@@ -1,3 +1,5 @@
+import javax.management.StandardEmitterMBean;
+
 public class Avl {
     private Node root;
 
@@ -30,11 +32,13 @@ public class Avl {
         if(node== this.root){
             this.root =b;
         }
-        if(node.getData() == b.getData()){
+        if(node.getData()==b.getData()){
+
             b.setCount(node.getCount());
             node.setCount(temp);
         }
-        System.out.println("Left R " + node.getData());
+
+
 
         return b;
 
@@ -50,14 +54,17 @@ public class Avl {
         node.setLeft(y);
         if(node== this.root){
             this.root =b;
+
         }
-        if(node.getData() == b.getData()){
+        if(node.getData()==b.getData()){
+
             b.setCount(node.getCount());
             node.setCount(temp);
         }
 
 
-        System.out.println("Right R " + node.getData());
+
+
         return b;
 
     }
@@ -81,16 +88,15 @@ public class Avl {
         if(key< node.getData()){
             node.setLeft(insert(node.getLeft(), key));
         }
-        else if(key > node.getData()){
+        else if(key >= node.getData()){
 
             node.setRight(insert(node.getRight(),key));
+            if(key == node.getData()){
+                node.setCount(node.getCount()+1);
+            }
 
         }
-        else  if (key == node.getData()){
-            node.setCount(node.getCount()+1);
-            node.setRight(insert(node.getRight(),key));
 
-        }
 
         int balance = getBalance(node);
 
@@ -129,11 +135,7 @@ public class Avl {
             node.setRight(delete(node.getRight() , key));
         }
         else {
-       /*     if(node.getCount() >= 2){
-                node.setCount(node.getCount()-1);
-               node= delete(src_equal(node,key) , key);
 
-            } */
              if(node.getRight() == null || node.getLeft() == null){
                    Node temp = node.getLeft() == null ? node.getRight() : node.getLeft();
 
@@ -149,10 +151,11 @@ public class Avl {
                 node.setData(temp.getData());
                 node.setCount(temp.getCount());
                 node.setRight(delete(node.getRight(),temp.getData()));
-            }
+            }}
+
             if (node == null)
                 return node;
-        }
+
         int balance = getBalance(node);
 
         if (balance > 1 && getBalance(node.getLeft()) >= 0)
@@ -167,7 +170,7 @@ public class Avl {
             return left_rotate(node);
 
         if (balance < -1 && getBalance(node.getRight()) > 0) {
-            root.setRight(right_rotate(node.getRight()));
+            node.setRight(right_rotate(node.getRight()));
             return left_rotate(node);
         }
 
@@ -182,7 +185,7 @@ public class Avl {
         }
         Node temp = root.getRight();
 
-        while (temp.getLeft() != null) {
+        while (temp.getLeft() != null && temp.getData() != root.getData()) {
             temp = temp.getLeft();
         }
         return temp;
@@ -229,7 +232,7 @@ public class Avl {
         sb.append(root.getData() + "(" +root.getCount() +")" );
 
         String pointerRight = "└──";
-        String pointerLeft = (root.getRight() != null) ? "├──" : "└──";
+        String pointerLeft = (root.getRight() != null) ? "├──" : "└──(left)";
 
         traverseNodes(sb, "", pointerLeft, root.getLeft(), root.getRight() != null);
         traverseNodes(sb, "", pointerRight, root.getRight(), false);
@@ -254,7 +257,7 @@ public class Avl {
 
             String paddingForBoth = paddingBuilder.toString();
             String pointerRight = "└──";
-            String pointerLeft = (node.getRight() != null) ? "├──" : "└──";
+            String pointerLeft = (node.getRight() != null) ? "├──" : "└── (left)";
 
             traverseNodes(sb, paddingForBoth, pointerLeft, node.getLeft(), node.getRight() != null);
             traverseNodes(sb, paddingForBoth, pointerRight, node.getRight(), false);

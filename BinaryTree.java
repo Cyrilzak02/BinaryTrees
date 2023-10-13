@@ -29,6 +29,9 @@ public class BinaryTree {
             root.setLeft(push(root.getLeft(), data));
         } else if (data >= root.getData()) {
             root.setRight(push(root.getRight(), data));
+            if(data == root.getData()){
+                root.setCount(root.getCount()+1);
+            }
         }
 
 
@@ -201,21 +204,38 @@ public class BinaryTree {
             root.setRight(delete_node(root.getRight(), n));
 
         } else {
-            if (root.getLeft() == null || root.getRight() == null) {
+            if(root.getCount() >=2) {
+                root.setRight(delete_node(root.getRight(),n));
+                root.setCount(root.getCount()-1);
+            }
+           else if (root.getLeft() == null || root.getRight() == null) {
                 Node temp = null;
                 temp = root.getLeft() == null ? root.getRight() : root.getLeft();
 
                 if (temp == null) {
-                    return null;
+                    if (this.root == root){
+                        this.root = null;
+                    }
+                    else{
+                    root = null;}
                 } else {
+                    if(this.root == root){
+                        if(temp == root.getLeft()){
+                            this.root = root.getLeft();
 
-                    return temp;
-                }
+                        }
+                        else {
+                            this.root = root.getRight();
+                        }
+                    }
+                    else{
+                    root = temp;
+                }}
             } else {
                 Node successor = getSuccessor(root);
                 root.setData(successor.getData());
                 root.setRight(delete_node(root.getRight(), root.getData()));
-                return root;
+
 
 
             }
@@ -229,7 +249,7 @@ public class BinaryTree {
         }
         Node temp = root.getRight();
 
-        while (temp.getLeft() != null) {
+        while (temp.getLeft() != null && temp.getData() != root.getData()) {
             temp = temp.getLeft();
         }
         return temp;
@@ -246,7 +266,7 @@ public class BinaryTree {
         sb.append(root.getData());
 
         String pointerRight = "└──";
-        String pointerLeft = (root.getRight() != null) ? "├──" : "└──";
+        String pointerLeft = (root.getRight() != null) ? "├──" : "└──(left)";
 
         traverseNodes(sb, "", pointerLeft, root.getLeft(), root.getRight() != null);
         traverseNodes(sb, "", pointerRight, root.getRight(), false);
@@ -271,7 +291,7 @@ public class BinaryTree {
 
             String paddingForBoth = paddingBuilder.toString();
             String pointerRight = "└──";
-            String pointerLeft = (node.getRight() != null) ? "├──" : "└──";
+            String pointerLeft = (node.getRight() != null) ? "├──" : "└──(left)";
 
             traverseNodes(sb, paddingForBoth, pointerLeft, node.getLeft(), node.getRight() != null);
             traverseNodes(sb, paddingForBoth, pointerRight, node.getRight(), false);
