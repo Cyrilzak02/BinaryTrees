@@ -311,6 +311,19 @@ public class Avl {
     public void print() {
         System.out.println((traversePreOrder(root)));
     }
+    public Node search(int elemento) {
+        Node actual = this.root;
+        while (actual != null && actual.getData() != elemento){
+
+            if (actual.getData() > elemento)
+                actual = actual.getLeft();
+            else
+                actual = actual.getRight();}
+
+        return actual;
+
+
+    }
 
 
 }
