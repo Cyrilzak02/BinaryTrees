@@ -1,26 +1,29 @@
-import java.util.*;
-public class Main {
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main_Normal {
     public static void main(String[] args) throws InterruptedException {
 
-
-        //Thread.sleep(30000);
+       // Thread.sleep(30000);
         int upperbound = 20000;
         Random rand = new Random(1234);
         Scanner in = new Scanner(System.in);
 
         int int_random = rand.nextInt(upperbound);
 
-        Avl d = new Avl();
+        BinaryTree d = new BinaryTree ();
 
-        int c [] = new int [12];
+
         int f [] ={6, 26, 26, 29, 49, 6, 65, 29, 85, 19,2,4};
-
-        System.out.println("Thread 1 Started.");
         String numbers = "";
+        System.out.println("Thread 1 Started.");
         long startTime = System.nanoTime();
+
+
+
         for (int i=0 ; i<20000;i++){
-            d.insert(int_random);
-            numbers += int_random +" ,";
+            d.push(int_random);
+            numbers += int_random + " ,";
 
 
 
@@ -33,9 +36,11 @@ public class Main {
         long duration = (endTime - startTime) / 1000000;
 
 
+
         d.print();
         System.out.println(numbers);
         System.out.println("Duracao insercao : "+ duration + " ms");
+
         System.out.print("What value do you want to search? ");
         int x = in.nextInt();
         Thread.sleep(20000);
@@ -45,7 +50,7 @@ public class Main {
         duration = endTime - startTime ;
         System.out.println("Duration of search : " + duration + " ns");
         Thread.sleep(5000);
-      /*  int x = 0;           to delete
+      /*  int x = 0;
         System.out.println("What value do you want to delete");
         x= in.nextInt();
         Thread.sleep(30000);
@@ -59,12 +64,8 @@ public class Main {
         System.out.println();
         Thread.sleep(10000);
         */
+        }
+
+
     }
-
-
-}
-
-
-
-
 
