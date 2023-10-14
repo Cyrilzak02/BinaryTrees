@@ -29,8 +29,8 @@ public class BinaryTree {
             root.setLeft(push(root.getLeft(), data));
         } else if (data >= root.getData()) {
             root.setRight(push(root.getRight(), data));
-            if(data == root.getData()){
-                root.setCount(root.getCount()+1);
+            if (data == root.getData()) {
+                root.setCount(root.getCount() + 1);
             }
         }
 
@@ -86,113 +86,7 @@ public class BinaryTree {
                }
           }
       } */
-    public void inordem(Node focusnode) {
-        if (focusnode != null) {
-            inordem(focusnode.getLeft());
-            System.out.print(focusnode.getData() + " ");
-            inordem(focusnode.getRight());
-        }
-    }
 
-    public void preordem(Node focusnode) {
-        if (focusnode != null) {
-            System.out.print(focusnode.getData() + " ");
-            preordem(focusnode.getLeft());
-            preordem(focusnode.getRight());
-        }
-    }
-
-    public void posordem(Node focusnode) {
-        if (focusnode != null) {
-            preordem(focusnode.getLeft());
-            preordem(focusnode.getRight());
-            System.out.print(focusnode.getData() + " ");
-        }
-    }
-
-    public Node achar_maior(Node focusnode) {
-        Node result = focusnode;
-        if (focusnode != null) {
-
-            Node nodeLeft = achar_maior(focusnode.getLeft());
-            Node nodeRight = achar_maior(focusnode.getRight());
-
-
-            if (nodeLeft != null && nodeLeft.getData() > result.getData()) {
-
-                result = nodeLeft;
-            }
-            if (nodeRight != null && nodeRight.getData() > result.getData()) {
-
-                result = nodeRight;
-            }
-        }
-
-        return result;
-    }
-
-    public Node achar_menor(Node focusnode) {
-        Node result = focusnode;
-        if (focusnode != null) {
-
-            Node nodeLeft = achar_maior(focusnode.getLeft());
-            Node nodeRight = achar_maior(focusnode.getRight());
-
-
-            if (nodeLeft != null && nodeLeft.getData() < result.getData()) {
-
-                result = nodeLeft;
-            }
-            if (nodeRight != null && nodeRight.getData() < result.getData()) {
-
-                result = nodeRight;
-            }
-        }
-
-        return result;
-    }
-
-    public Node delete_Biggest() {
-        Node max = achar_maior(root);
-        Node focusnode = root;
-        Node parent_node = new Node();
-        while (focusnode.getRight() != null) {
-            if (focusnode.getRight().getData() == max.getData()) {
-                parent_node = focusnode;
-                break;
-            }
-
-            focusnode = focusnode.getRight();
-
-        }
-
-        parent_node.setRight(null);
-
-        return max;
-
-
-    }
-
-    public Node delete_Smallest() {
-        Node min = achar_menor(root);
-        Node focusnode = root;
-        Node parent_node = new Node();
-        while (focusnode.getLeft() != null) {
-            if (focusnode.getLeft().getData() == min.getData()) {
-                parent_node = focusnode;
-                break;
-            }
-
-            focusnode = focusnode.getLeft();
-
-        }
-
-        parent_node.setLeft(null);
-
-        return min;
-
-
-    }
 
     public Node delete_node(Node root, int n) {
         if (root == null) {
@@ -204,38 +98,35 @@ public class BinaryTree {
             root.setRight(delete_node(root.getRight(), n));
 
         } else {
-            if(root.getCount() >=2) {
-                root.setRight(delete_node(root.getRight(),n));
-                root.setCount(root.getCount()-1);
-            }
-           else if (root.getLeft() == null || root.getRight() == null) {
+            if (root.getCount() >= 2) {
+                root.setRight(delete_node(root.getRight(), n));
+                root.setCount(root.getCount() - 1);
+            } else if (root.getLeft() == null || root.getRight() == null) {
                 Node temp = null;
                 temp = root.getLeft() == null ? root.getRight() : root.getLeft();
 
                 if (temp == null) {
-                    if (this.root == root){
+                    if (this.root == root) {
                         this.root = null;
+                    } else {
+                        root = null;
                     }
-                    else{
-                    root = null;}
                 } else {
-                    if(this.root == root){
-                        if(temp == root.getLeft()){
+                    if (this.root == root) {
+                        if (temp == root.getLeft()) {
                             this.root = root.getLeft();
 
-                        }
-                        else {
+                        } else {
                             this.root = root.getRight();
                         }
+                    } else {
+                        root = temp;
                     }
-                    else{
-                    root = temp;
-                }}
+                }
             } else {
                 Node successor = getSuccessor(root);
                 root.setData(successor.getData());
                 root.setRight(delete_node(root.getRight(), root.getData()));
-
 
 
             }
@@ -304,12 +195,13 @@ public class BinaryTree {
 
     public Node search(int elemento) {
         Node actual = this.root;
-        while (actual != null && actual.getData() != elemento){
+        while (actual != null && actual.getData() != elemento) {
 
             if (actual.getData() > elemento)
                 actual = actual.getLeft();
             else
-                actual = actual.getRight();}
+                actual = actual.getRight();
+        }
 
         return actual;
 
